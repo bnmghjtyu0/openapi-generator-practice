@@ -90,15 +90,19 @@ components:
         id:
           type: integer
           format: int64
+          description: 寵物 id
         name:
           type: string
+          description: 寵物名字
         tag:
           type: string
+          description: 寵物標籤
     Pets:
       type: array
       items:
         $ref: "#/components/schemas/Pet"
     Error:
+      description: API 錯誤
       type: object
       required:
         - code
@@ -107,5 +111,7 @@ components:
         code:
           type: integer
           format: int32
+          description: 錯誤代碼
         message:
           type: string
+          description: 錯誤訊息

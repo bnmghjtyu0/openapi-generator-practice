@@ -5,11 +5,17 @@
     "version": "5.4.0",
     "generators": {
       "v2.0": {
-        "generatorName": "typescript",
+        "generatorName": "typescript-angular",
         "output": "#{cwd}/openapi/v2.0",
         "glob": "api/v2.0/*.{json,yaml}",
         "additionalProperties": {
-          "ngVersion": "6.1.7",
+          "fileNaming": "kebab-case",
+          "allowUnicodeIdentifiers":true,
+          "modelFileSuffix":".model",
+          "prependFormOrBodyParameters": true,
+          "queryParamObjectFormat":"json",
+          "serviceFileSuffix":".",
+          "ngVersion": "12.0.1",
           "npmName": "restClient",
           "supportsES6": "true",
           "npmVersion": "6.9.0",
