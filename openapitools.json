@@ -5,7 +5,7 @@
     "version": "5.4.0",
     "generators": {
       "v2.0": {
-        "generatorName": "typescript-angular",
+        "generatorName": "typescript",
         "output": "#{cwd}/openapi/v2.0",
         "glob": "api/v2.0/*.{json,yaml}",
         "additionalProperties": {
