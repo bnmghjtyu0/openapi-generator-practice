@@ -1,0 +1,115 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Swagger Petstore
+  license:
+    name: MIT
+servers:
+  - url: 'http://petstore.swagger.io/v1'
+paths:
+  /cms/draftList:
+    post:
+      summary: Create a pet
+      operationId: draftList
+      tags:
+        - pets
+      responses:
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+      description: |-
+        開發人員：lily
+        描述:
+
+            後台上稿功能清單，資料排序優先度：建立日期createDate（sort desc），草稿流水號id(sort desc)。
+            只顯示status=01-06狀態。
+            可針對特定草稿流水號id抓取單一資料
+
+        列表頁(由後端篩選)
+        status=01 草稿
+        經辦:只能看到自己的 操作: 編輯(o)、檢視(o)、刪除(o)
+        主管:只能看到自己的 操作: 編輯(o)、檢視(o)、刪除(o)
+
+        status=02 待主管審核
+        經辦:可以看到全部清單 操作: 編輯(x)、檢視(o)、刪除(x)
+        主管:可以看到全部清單 操作: 編輯(x)、檢視(o)、刪除(x)
+
+        status=03 待上架
+        經辦:可以看到全部清單 操作: 編輯(x)、檢視(o)、刪除(x)
+        主管:可以看到全部清單 操作: 編輯(x)、檢視(o)、刪除(x)
+
+        status=04 上架
+        經辦:可以看到全部清單 操作: 編輯(x)、檢視(o)、刪除(x)
+        主管:可以看到全部清單 操作: 編輯(x)、檢視(o)、刪除(x)
+
+        status=05 下架
+        經辦:可以看到全部清單 操作: 編輯(x)、檢視(o)、刪除(x)
+        主管:可以看到全部清單 操作: 編輯(x)、檢視(o)、刪除(x)
+
+        status=06 退回
+        經辦:只能看到自己的 操作: 編輯(o)、檢視(o)、刪除(o)
+        主管:可以看到全部清單 操作: 編輯(o)、檢視(o)、刪除(o)
+
+        status=07 已刪除
+        經辦:不能看到 操作: x
+        主管:可以看到全部清單 操作: 編輯(x)、檢視(o)、刪除(x)
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: 'authorization:Bearer [JWT]'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                type:
+                  type: string
+                id:
+                  type: integer
+              x-examples:
+                example-1:
+                  type: '01'
+                  id: 101
+    parameters: []
+components:
+  schemas:
+    Response:
+      type: object
+      properties:
+        status:
+          type: string
+        message:
+          type: string
+        success:
+          type: boolean
+        data:
+          type: 'null'
+      x-examples:
+        example-1:
+          status: A0001
+          message: success
+          success: true
+          data: null
+      title: Response
+      description: API 回傳
+    Error:
+      description: API 錯誤
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+          description: 錯誤代碼
+        message:
+          type: string
+          description: 錯誤訊息
+      title: ''
+      x-examples: {}

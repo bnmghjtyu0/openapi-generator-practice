@@ -1,0 +1,144 @@
+{
+  "openapi" : "3.0.0",
+  "info" : {
+    "license" : {
+      "name" : "MIT"
+    },
+    "title" : "Swagger Petstore",
+    "version" : "1.0.0"
+  },
+  "servers" : [ {
+    "url" : "http://petstore.swagger.io/v1"
+  } ],
+  "paths" : {
+    "/cms/draftList" : {
+      "post" : {
+        "description" : "開發人員：lily\n描述:\n\n    後台上稿功能清單，資料排序優先度：建立日期createDate（sort desc），草稿流水號id(sort desc)。\n    只顯示status=01-06狀態。\n    可針對特定草稿流水號id抓取單一資料\n\n列表頁(由後端篩選)\nstatus=01 草稿\n經辦:只能看到自己的 操作: 編輯(o)、檢視(o)、刪除(o)\n主管:只能看到自己的 操作: 編輯(o)、檢視(o)、刪除(o)\n\nstatus=02 待主管審核\n經辦:可以看到全部清單 操作: 編輯(x)、檢視(o)、刪除(x)\n主管:可以看到全部清單 操作: 編輯(x)、檢視(o)、刪除(x)\n\nstatus=03 待上架\n經辦:可以看到全部清單 操作: 編輯(x)、檢視(o)、刪除(x)\n主管:可以看到全部清單 操作: 編輯(x)、檢視(o)、刪除(x)\n\nstatus=04 上架\n經辦:可以看到全部清單 操作: 編輯(x)、檢視(o)、刪除(x)\n主管:可以看到全部清單 操作: 編輯(x)、檢視(o)、刪除(x)\n\nstatus=05 下架\n經辦:可以看到全部清單 操作: 編輯(x)、檢視(o)、刪除(x)\n主管:可以看到全部清單 操作: 編輯(x)、檢視(o)、刪除(x)\n\nstatus=06 退回\n經辦:只能看到自己的 操作: 編輯(o)、檢視(o)、刪除(o)\n主管:可以看到全部清單 操作: 編輯(o)、檢視(o)、刪除(o)\n\nstatus=07 已刪除\n經辦:不能看到 操作: x\n主管:可以看到全部清單 操作: 編輯(x)、檢視(o)、刪除(x)",
+        "operationId" : "draftList",
+        "parameters" : [ {
+          "explode" : false,
+          "in" : "header",
+          "name" : "authorization:Bearer [JWT]",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          },
+          "style" : "simple"
+        } ],
+        "requestBody" : {
+          "$ref" : "#/components/requestBodies/inline_object",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "properties" : {
+                  "type" : {
+                    "type" : "string"
+                  },
+                  "id" : {
+                    "type" : "integer"
+                  }
+                },
+                "type" : "object",
+                "x-examples" : {
+                  "example-1" : {
+                    "type" : "01",
+                    "id" : 101
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "default" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Response"
+                }
+              }
+            },
+            "description" : "unexpected error"
+          }
+        },
+        "summary" : "Create a pet",
+        "tags" : [ "pets" ]
+      }
+    }
+  },
+  "components" : {
+    "requestBodies" : {
+      "inline_object" : {
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/inline_object"
+            }
+          }
+        }
+      }
+    },
+    "schemas" : {
+      "Response" : {
+        "description" : "API 回傳",
+        "properties" : {
+          "status" : {
+            "type" : "string"
+          },
+          "message" : {
+            "type" : "string"
+          },
+          "success" : {
+            "type" : "boolean"
+          },
+          "data" : {
+            "type" : "null"
+          }
+        },
+        "title" : "Response",
+        "type" : "object",
+        "x-examples" : {
+          "example-1" : {
+            "status" : "A0001",
+            "message" : "success",
+            "success" : true
+          }
+        }
+      },
+      "Error" : {
+        "description" : "API 錯誤",
+        "properties" : {
+          "code" : {
+            "description" : "錯誤代碼",
+            "format" : "int32",
+            "type" : "integer"
+          },
+          "message" : {
+            "description" : "錯誤訊息",
+            "type" : "string"
+          }
+        },
+        "required" : [ "code", "message" ],
+        "type" : "object",
+        "x-examples" : { }
+      },
+      "inline_object" : {
+        "properties" : {
+          "type" : {
+            "type" : "string"
+          },
+          "id" : {
+            "type" : "integer"
+          }
+        },
+        "type" : "object",
+        "x-examples" : {
+          "example-1" : {
+            "type" : "01",
+            "id" : 101
+          }
+        }
+      }
+    }
+  }
+}
